@@ -290,7 +290,6 @@
             reader.onload = (e) => {
                 previewImage.src = e.target.result;
                 previewContainer.style.display = 'block';
-                analyzeBtn.style.display = 'inline-block';
                 resultContainer.style.display = 'none';
             };
             reader.readAsDataURL(file);
