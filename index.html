@@ -495,8 +495,11 @@
 
                 // Add image if provided
                 if (selectedFile) {
-                    const base64Image = await fileToBase64(selectedFile);
-                    formData.image = base64Image;
+                    // Compress image before sending
+                    const compressedImage = await resizeImage(selectedFile);
+                    formData.image = compressedImage;
+                    formData.originalFilesize = selectedFile.size;
+                    formData.compressed = true;
                 }
 
                 // Send to webhook
