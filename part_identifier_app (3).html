@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part Identifier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f0f2ff;
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8ebff;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .preview-container {
+            margin: 20px 0;
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            display: none;
+            text-align: left;
+        }
+
+        .result-title {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .result-text {
+            color: #555;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .webhook-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .webhook-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .setup-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .setup-title {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Universal Truck Parts Identifier</h1>
+        
+        <div class="description-section">
+            <div class="description-title">Part Description (Optional):</div>
+            <br>
+            <textarea id="partDescription" class="description-input" 
+                     placeholder="Describe the part or provide any additional details to help with identification (e.g., location on vehicle, symptoms, part numbers visible, etc.)"></textarea>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">
+                Click here or drag & drop your part image<br>
+                <small>Supports JPG, PNG, GIF files</small>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept="image/*">
+        </div>
+
+        <div class="preview-container" id="previewContainer">
+            <img id="previewImage" class="preview-image" alt="Preview">
+        </div>
+
+        <button id="analyzeBtn" class="analyze-btn">🔍 Identify Part</button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing your part...</p>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">Part Identification Results:</div>
+            <div class="result-text" id="resultText"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFile = null;
+
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const loading = document.getElementById('loading');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultText = document.getElementById('resultText');
+        const webhookUrl = document.getElementById('webhookUrl');
+
+        // Upload area click handler
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // File input change handler
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // Analyze button handler
+        analyzeBtn.addEventListener('click', analyzePart);
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        function handleFile(file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file (JPG, PNG, GIF)');
+                return;
+            }
+
+            // Validate file size (max 5MB for mobile photos)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image too large. Please use a smaller image (under 5MB). Most phone photos work great!');
+                return;
+            }
+
+            selectedFile = file;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = 'block';
+                resultContainer.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function analyzePart() {
+            const url = "https://hook.us2.make.com/oayob8jxp3ueac2v47ao54e0adb6v5xi";
+            
+            if (!selectedFile) {
+                alert('Please select an image first!');
+                return;
+            }
+
+            // Generate unique request ID
+            requestId = 'part_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            // Show loading state
+            loading.style.display = 'block';
+            analyzeBtn.disabled = true;
+            resultContainer.style.display = 'none';
+
+            try {
+                // Convert image to base64
+                const base64Image = await fileToBase64(selectedFile);
+                
+                // Get the part description
+                const description = partDescription.value.trim();
+                
+                // Prepare the data
+                const formData = {
+                    requestId: requestId,
+                    image: base64Image,
+                    filename: selectedFile.name,
+                    filesize: selectedFile.size,
+                    filetype: selectedFile.type,
+                    timestamp: new Date().toISOString(),
+                    partDescription: description,
+                    request: description 
+                        ? `Please identify this automotive part. Additional context: ${description}. Provide the part name, function, primary part number, and any alternative/compatible part numbers.`
+                        : "Please identify this automotive part. Provide the part name, function, primary part number, and any alternative/compatible part numbers."
+                };
+
+                // Send to webhook
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    showResult("🔍 Analysis in progress...\n\nWe're identifying your part and looking up part numbers. This may take a few moments.");
+                    
+                    // Start polling for response
+                    startPolling();
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Error sending image: ${error.message}\n\nPlease check your connection and try again.`);
+                loading.style.display = 'none';
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        function startPolling() {
+            let attempts = 0;
+            const maxAttempts = 24; // 2 minutes of polling (5 second intervals)
+            
+            pollingInterval = setInterval(async () => {
+                attempts++;
+                
+                try {
+                    // In a real implementation, this would check your server for the response
+                    // For now, we'll simulate a response after 15 seconds for demo purposes
+                    if (attempts >= 3) {
+                        clearInterval(pollingInterval);
+                        displayPartResponse(simulateResponse());
+                        loading.style.display = 'none';
+                        analyzeBtn.disabled = false;
+                        return;
+                    }
+                    
+                    // You would replace this with actual polling to your server
+                    // const response = await fetch(`/api/part-response/${requestId}`);
+                    // if (response.ok) {
+                    //     const data = await response.json();
+                    //     if (data.status === 'complete') {
+                    //         clearInterval(pollingInterval);
+                    //         displayPartResponse(data);
+                    //         loading.style.display = 'none';
+                    //         analyzeBtn.disabled = false;
+                    //     }
+                    // }
+                    
+                } catch (error) {
+                    console.error('Polling error:', error);
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(pollingInterval);
+                    showResult("⏰ Analysis timeout. Please try again or contact support if the issue persists.");
+                    loading.style.display = 'none';
+                    analyzeBtn.disabled = false;
+                }
+            }, 5000); // Poll every 5 seconds
+        }
+
+        function displayPartResponse(data) {
+            // Clear any polling messages
+            const pollingMsg = document.querySelector('.polling-message');
+            if (pollingMsg) pollingMsg.remove();
+            
+            const partInfoHtml = `
+                <div class="part-info">
+                    <div class="part-name">${data.partName}</div>
+                    <div>Primary Part Number: <span class="part-number">${data.partNumber}</span></div>
+                    ${data.description ? `<p style="margin-top: 15px; color: #6b7280;">${data.description}</p>` : ''}
+                    
+                    ${data.alternativePartNumbers && data.alternativePartNumbers.length > 0 ? `
+                        <div class="alt-parts">
+                            <div class="alt-parts-title">Alternative/Compatible Part Numbers:</div>
+                            <div class="alt-part-list">
+                                ${data.alternativePartNumbers.map(partNum => 
+                                    `<span class="alt-part-number">${partNum}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+                <button id="resetBtn" class="reset-btn">🔄 Search Another Part</button>
+            `;
+            
+            resultContainer.innerHTML = `
+                <div class="result-title">✅ Part Identified Successfully</div>
+                ${partInfoHtml}
+            `;
+            resultContainer.style.display = 'block';
+            
+            // Add reset button functionality
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+        }
+
+        function resetForm() {
+            // Clear all form inputs
+            partDescription.value = '';
+            selectedFile = null;
+            
+            // Hide preview and results
+            previewContainer.style.display = 'none';
+            resultContainer.style.display = 'none';
+            loading.style.display = 'none';
+            
+            // Reset file input
+            fileInput.value = '';
+            
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            
+            // Clear any ongoing polling
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
+            
+            // Reset request ID
+            requestId = null;
+            
+            // Scroll back to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function showResult(text) {
+            resultText.textContent = text;
+            resultContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
