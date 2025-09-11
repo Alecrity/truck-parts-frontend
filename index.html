@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part Identifier</title>
+    <title>Universal Truck Parts Identifier</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,51 +23,54 @@
 
         .container {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             padding: 40px;
             max-width: 600px;
             width: 100%;
             text-align: center;
+            border-top: 5px solid #dc2626;
         }
 
         h1 {
-            color: #333;
+            color: #374151;
             margin-bottom: 30px;
             font-size: 2.5em;
-            font-weight: 300;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .upload-area {
-            border: 3px dashed #667eea;
+            border: 3px dashed #dc2626;
             border-radius: 15px;
             padding: 40px;
             margin: 30px 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: #f8f9ff;
+            background: #fef2f2;
         }
 
         .upload-area:hover {
-            border-color: #764ba2;
-            background: #f0f2ff;
+            border-color: #b91c1c;
+            background: #fee2e2;
             transform: translateY(-2px);
         }
 
         .upload-area.dragover {
-            border-color: #764ba2;
-            background: #e8ebff;
+            border-color: #b91c1c;
+            background: #fee2e2;
         }
 
         .upload-icon {
             font-size: 3em;
-            color: #667eea;
+            color: #dc2626;
             margin-bottom: 15px;
         }
 
         .upload-text {
-            color: #666;
+            color: #6b7280;
             font-size: 1.1em;
+            font-weight: 500;
         }
 
         .file-input {
@@ -86,28 +89,44 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .analyze-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .submit-btn {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.1em;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 20px 0;
-            display: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
         }
 
-        .analyze-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
         }
 
-        .analyze-btn:disabled {
+        .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .submit-note {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-style: italic;
         }
 
         .loading {
@@ -117,7 +136,7 @@
 
         .spinner {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+            border-top: 3px solid #dc2626;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -132,53 +151,121 @@
 
         .result-container {
             margin-top: 30px;
-            padding: 20px;
-            background: #f8f9ff;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
+            padding: 25px;
+            background: #f9fafb;
+            border-radius: 10px;
+            border-left: 5px solid #374151;
+            border-right: 5px solid #dc2626;
             display: none;
             text-align: left;
         }
 
         .result-title {
-            color: #333;
-            font-size: 1.3em;
-            margin-bottom: 15px;
+            color: #374151;
+            font-size: 1.4em;
+            margin-bottom: 20px;
             font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid #dc2626;
+            padding-bottom: 10px;
         }
 
         .result-text {
-            color: #555;
+            color: #6b7280;
             line-height: 1.6;
             white-space: pre-wrap;
         }
 
-        .webhook-input {
+        .part-info {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .part-name {
+            color: #dc2626;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .part-number {
+            color: #374151;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            background: #f3f4f6;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .alt-parts {
+            margin-top: 20px;
+        }
+
+        .alt-parts-title {
+            color: #374151;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .alt-part-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .alt-part-number {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .polling-message {
+            text-align: center;
+            color: #6b7280;
+            font-style: italic;
+            margin: 15px 0;
+        }
+
+        .description-input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
+            padding: 15px;
+            border: 2px solid #d1d5db;
             border-radius: 8px;
             margin: 10px 0;
             font-size: 1em;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            min-height: 120px;
         }
 
-        .webhook-input:focus {
+        .description-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
-        .setup-section {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
+        .description-section {
+            background: #fef2f2;
+            border: 2px solid #dc2626;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 30px;
         }
 
-        .setup-title {
-            color: #856404;
+        .description-title {
+            color: #374151;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -187,17 +274,17 @@
         <h1>🔧 Universal Truck Parts Identifier</h1>
         
         <div class="description-section">
-            <div class="description-title">Part Description (Optional):</div>
+            <div class="description-title">Part Number or Description:</div>
             <br>
             <textarea id="partDescription" class="description-input" 
-                     placeholder="Describe the part or provide any additional details to help with identification (e.g., location on vehicle, symptoms, part numbers visible, etc.)"></textarea>
+                     placeholder="Enter part number, description, or any details to help identify the part (e.g., 'brake caliper F150 2018', 'part #12345-ABC', 'leaking power steering pump', etc.)"></textarea>
         </div>
 
         <div class="upload-area" id="uploadArea">
             <div class="upload-icon">📷</div>
             <div class="upload-text">
-                Click here or drag & drop your part image<br>
-                <small>Supports JPG, PNG, GIF files</small>
+                Upload Image (Optional)<br>
+                <small>Click here or drag & drop part image • JPG, PNG, GIF</small>
             </div>
             <input type="file" id="fileInput" class="file-input" accept="image/*">
         </div>
@@ -206,7 +293,10 @@
             <img id="previewImage" class="preview-image" alt="Preview">
         </div>
 
-        <button id="analyzeBtn" class="analyze-btn">🔍 Identify Part</button>
+        <div class="submit-section">
+            <button id="submitBtn" class="submit-btn">🔍 Identify Part</button>
+            <p class="submit-note">You can submit with text only, image only, or both for best results</p>
+        </div>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
@@ -221,17 +311,22 @@
 
     <script>
         let selectedFile = null;
+        let requestId = null;
+        let pollingInterval = null;
+        
+        // Your Railway webhook server URL
+        const RAILWAY_API_URL = 'https://truck-webhook-production.up.railway.app';
 
         // DOM elements
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
         const previewImage = document.getElementById('previewImage');
-        const analyzeBtn = document.getElementById('analyzeBtn');
+        const submitBtn = document.getElementById('submitBtn');
         const loading = document.getElementById('loading');
         const resultContainer = document.getElementById('resultContainer');
         const resultText = document.getElementById('resultText');
-        const webhookUrl = document.getElementById('webhookUrl');
+        const partDescription = document.getElementById('partDescription');
 
         // Upload area click handler
         uploadArea.addEventListener('click', () => {
@@ -260,8 +355,8 @@
             }
         });
 
-        // Analyze button handler
-        analyzeBtn.addEventListener('click', analyzePart);
+        // Submit button handler
+        submitBtn.addEventListener('click', analyzePart);
 
         function handleFileSelect(e) {
             const file = e.target.files[0];
@@ -298,8 +393,12 @@
         async function analyzePart() {
             const url = "https://hook.us2.make.com/oayob8jxp3ueac2v47ao54e0adb6v5xi";
             
-            if (!selectedFile) {
-                alert('Please select an image first!');
+            // Get the part description
+            const description = partDescription.value.trim();
+            
+            // Check if we have either image or description
+            if (!selectedFile && !description) {
+                alert('Please provide either an image, part number, or description to identify the part.');
                 return;
             }
 
@@ -308,29 +407,29 @@
 
             // Show loading state
             loading.style.display = 'block';
-            analyzeBtn.disabled = true;
+            submitBtn.disabled = true;
             resultContainer.style.display = 'none';
 
             try {
-                // Convert image to base64
-                const base64Image = await fileToBase64(selectedFile);
-                
-                // Get the part description
-                const description = partDescription.value.trim();
-                
                 // Prepare the data
                 const formData = {
                     requestId: requestId,
-                    image: base64Image,
-                    filename: selectedFile.name,
-                    filesize: selectedFile.size,
-                    filetype: selectedFile.type,
+                    filename: selectedFile ? selectedFile.name : null,
+                    filesize: selectedFile ? selectedFile.size : null,
+                    filetype: selectedFile ? selectedFile.type : null,
                     timestamp: new Date().toISOString(),
                     partDescription: description,
+                    hasImage: !!selectedFile,
                     request: description 
-                        ? `Please identify this automotive part. Additional context: ${description}. Provide the part name, function, primary part number, and any alternative/compatible part numbers.`
-                        : "Please identify this automotive part. Provide the part name, function, primary part number, and any alternative/compatible part numbers."
+                        ? `Please identify this automotive part. Search query: "${description}". ${selectedFile ? 'Also analyze the provided image. ' : ''}Provide the part name, primary part number, and any alternative/compatible part numbers.`
+                        : "Please identify this automotive part from the image. Provide the part name, primary part number, and any alternative/compatible part numbers."
                 };
+
+                // Add image if provided
+                if (selectedFile) {
+                    const base64Image = await fileToBase64(selectedFile);
+                    formData.image = base64Image;
+                }
 
                 // Send to webhook
                 const response = await fetch(url, {
@@ -352,53 +451,74 @@
 
             } catch (error) {
                 console.error('Error:', error);
-                showResult(`❌ Error sending image: ${error.message}\n\nPlease check your connection and try again.`);
+                showResult(`❌ Error sending request: ${error.message}\n\nPlease check your connection and try again.`);
                 loading.style.display = 'none';
-                analyzeBtn.disabled = false;
+                submitBtn.disabled = false;
             }
         }
 
         function startPolling() {
             let attempts = 0;
-            const maxAttempts = 24; // 2 minutes of polling (5 second intervals)
+            const maxAttempts = 36; // 3 minutes of polling (5 second intervals)
             
             pollingInterval = setInterval(async () => {
                 attempts++;
                 
                 try {
-                    // In a real implementation, this would check your server for the response
-                    // For now, we'll simulate a response after 15 seconds for demo purposes
-                    if (attempts >= 3) {
-                        clearInterval(pollingInterval);
-                        displayPartResponse(simulateResponse());
-                        loading.style.display = 'none';
-                        analyzeBtn.disabled = false;
-                        return;
-                    }
+                    // Poll Railway server for response
+                    const response = await fetch(`${RAILWAY_API_URL}/get-response/${requestId}`);
                     
-                    // You would replace this with actual polling to your server
-                    // const response = await fetch(`/api/part-response/${requestId}`);
-                    // if (response.ok) {
-                    //     const data = await response.json();
-                    //     if (data.status === 'complete') {
-                    //         clearInterval(pollingInterval);
-                    //         displayPartResponse(data);
-                    //         loading.style.display = 'none';
-                    //         analyzeBtn.disabled = false;
-                    //     }
-                    // }
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.status === 'complete') {
+                            clearInterval(pollingInterval);
+                            displayPartResponse(data);
+                            loading.style.display = 'none';
+                            submitBtn.disabled = false;
+                            return;
+                        } else if (data.status === 'pending') {
+                            // Update polling message
+                            showPollingMessage(`🔍 Analysis in progress... (${attempts * 5}s)`);
+                        }
+                    }
                     
                 } catch (error) {
                     console.error('Polling error:', error);
+                    // Continue polling even if there's a network error
                 }
                 
                 if (attempts >= maxAttempts) {
                     clearInterval(pollingInterval);
-                    showResult("⏰ Analysis timeout. Please try again or contact support if the issue persists.");
+                    showResult("⏰ Analysis timeout. The analysis may still be in progress. Please try again in a moment or contact support if the issue persists.");
                     loading.style.display = 'none';
-                    analyzeBtn.disabled = false;
+                    submitBtn.disabled = false;
                 }
             }, 5000); // Poll every 5 seconds
+        }
+
+        function showPollingMessage(message) {
+            const pollingDiv = document.querySelector('.polling-message') || document.createElement('div');
+            pollingDiv.className = 'polling-message';
+            pollingDiv.textContent = message;
+            
+            if (!document.querySelector('.polling-message')) {
+                resultContainer.appendChild(pollingDiv);
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function showResult(text) {
+            resultText.textContent = text;
+            resultContainer.style.display = 'block';
         }
 
         function displayPartResponse(data) {
@@ -429,20 +549,6 @@
                 <div class="result-title">✅ Part Identified Successfully</div>
                 ${partInfoHtml}
             `;
-            resultContainer.style.display = 'block';
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        function showResult(text) {
-            resultText.textContent = text;
             resultContainer.style.display = 'block';
         }
     </script>
