@@ -379,6 +379,43 @@
         const resultText = document.getElementById('resultText');
         const partDescription = document.getElementById('partDescription');
 
+        // Helper function for image compression
+        function resizeImageToBase64(file, maxWidth = 700, maxHeight = 500, quality = 0.6) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                
+                img.onload = () => {
+                    // Calculate new dimensions while maintaining aspect ratio
+                    let { width, height } = img;
+                    
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width = (width * maxHeight) / height;
+                            height = maxHeight;
+                        }
+                    }
+                    
+                    // Set canvas dimensions
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    // Draw and compress image, return as base64
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                    resolve(compressedBase64);
+                };
+                
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
         // Upload area click handler
         uploadArea.addEventListener('click', () => {
             fileInput.click();
@@ -456,41 +493,6 @@
             
             // Clear the image source
             previewImage.src = '';
-        }
-
-        function resizeImageToBlob(file, maxWidth = 700, maxHeight = 500, quality = 0.6) {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const img = new Image();
-                
-                img.onload = () => {
-                    // Calculate new dimensions while maintaining aspect ratio
-                    let { width, height } = img;
-                    
-                    if (width > height) {
-                        if (width > maxWidth) {
-                            height = (height * maxWidth) / width;
-                            width = maxWidth;
-                        }
-                    } else {
-                        if (height > maxHeight) {
-                            width = (width * maxHeight) / height;
-                            height = maxHeight;
-                        }
-                    }
-                    
-                    // Set canvas dimensions
-                    canvas.width = width;
-                    canvas.height = height;
-                    
-                    // Draw and compress image, return as blob
-                    ctx.drawImage(img, 0, 0, width, height);
-                    canvas.toBlob(resolve, 'image/jpeg', quality);
-                };
-                
-                img.src = URL.createObjectURL(file);
-            });
         }
 
         async function analyzePart() {
