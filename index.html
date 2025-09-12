@@ -23,117 +23,51 @@
 
         .container {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             padding: 40px;
-            max-width: 700px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
-            border-top: 6px solid #dc2626;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, #dc2626, transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            border-top: 5px solid #dc2626;
         }
 
         h1 {
             color: #374151;
             margin-bottom: 30px;
-            font-size: 2.8em;
+            font-size: 2.5em;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            background: linear-gradient(135deg, #374151, #dc2626);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .feature-badges {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            color: #dc2626;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            border: 1px solid #fca5a5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .description-section {
-            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            background: #fef2f2;
             border: 2px solid #dc2626;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 30px;
-            position: relative;
         }
 
-        .section-title {
+        .description-title {
             color: #374151;
             font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
         }
 
         .description-input {
             width: 100%;
-            padding: 18px;
+            padding: 15px;
             border: 2px solid #d1d5db;
-            border-radius: 12px;
+            border-radius: 8px;
             margin: 10px 0;
             font-size: 1em;
             font-family: Arial, sans-serif;
             resize: vertical;
             min-height: 120px;
-            transition: all 0.3s ease;
         }
 
         .description-input:focus {
-            outline: none;
-            border-color: #dc2626;
-            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .vin-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #d1d5db;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-size: 1em;
-            font-family: 'Courier New', monospace;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-
-        .vin-input:focus {
             outline: none;
             border-color: #dc2626;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
@@ -141,56 +75,29 @@
 
         .upload-area {
             border: 3px dashed #dc2626;
-            border-radius: 20px;
-            padding: 50px 20px;
+            border-radius: 15px;
+            padding: 40px;
             margin: 30px 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, #fef2f2, #fee2e2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-area::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(220, 38, 38, 0.1) 50%, transparent 60%);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .upload-area:hover::before {
-            transform: translateX(100%);
+            background: #fef2f2;
         }
 
         .upload-area:hover {
             border-color: #b91c1c;
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.2);
+            background: #fee2e2;
+            transform: translateY(-2px);
         }
 
         .upload-area.dragover {
             border-color: #b91c1c;
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            transform: scale(1.02);
+            background: #fee2e2;
         }
 
         .upload-icon {
-            font-size: 3.5em;
+            font-size: 3em;
             color: #dc2626;
             margin-bottom: 15px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
         }
 
         .upload-text {
@@ -204,114 +111,68 @@
         }
 
         .preview-container {
-            margin: 25px 0;
+            margin: 20px 0;
             display: none;
             position: relative;
             text-align: center;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
         .preview-image {
             max-width: 100%;
-            max-height: 350px;
-            border-radius: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .preview-image:hover {
-            transform: scale(1.02);
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .remove-image-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 10px;
+            right: 10px;
             background: #dc2626;
             color: white;
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
 
         .remove-image-btn:hover {
             background: #b91c1c;
-            transform: scale(1.15);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-        }
-
-        .camera-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 15px 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .camera-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            transform: scale(1.1);
         }
 
         .submit-section {
             text-align: center;
-            margin: 35px 0;
+            margin: 30px 0;
         }
 
         .submit-btn {
             background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
             color: white;
             border: none;
-            padding: 20px 50px;
-            border-radius: 12px;
-            font-size: 1.3em;
-            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 20px 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .submit-btn:hover::before {
-            left: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
         }
 
         .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
             background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
         }
 
@@ -323,149 +184,22 @@
 
         .submit-note {
             color: #6b7280;
-            font-size: 0.95em;
-            margin-top: 15px;
-            font-style: italic;
-            background: #f9fafb;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border-left: 4px solid #dc2626;
-        }
-
-        .loading {
-            display: none;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #dc2626;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: #6b7280;
-            font-size: 1.1em;
-            font-weight: 500;
-        }
-
-        .result-container {
-            margin-top: 35px;
-            padding: 30px;
-            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
-            border-radius: 15px;
-            border: 2px solid #e5e7eb;
-            display: none;
-            text-align: left;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
-        }
-
-        .result-title {
-            color: #374151;
-            font-size: 1.5em;
-            margin-bottom: 25px;
-            font-weight: bold;
-            text-align: center;
-            padding: 15px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            border-radius: 10px;
-            margin: -15px -15px 25px -15px;
-        }
-
-        .part-info {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            transition: transform 0.3s ease;
-        }
-
-        .part-info:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-
-        .part-name {
-            color: #dc2626;
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
-
-        .part-number {
-            color: #374151;
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-bottom: 18px;
-            padding: 10px 15px;
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-            border-radius: 8px;
-            display: inline-block;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-        }
-
-        .alt-parts {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid #f3f4f6;
-        }
-
-        .alt-parts-title {
-            color: #374151;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.15em;
-        }
-
-        .alt-part-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .alt-part-number {
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            color: #dc2626;
-            padding: 8px 16px;
-            border-radius: 25px;
             font-size: 0.9em;
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-            border: 1px solid #fca5a5;
-            transition: all 0.3s ease;
-        }
-
-        .alt-part-number:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #fecaca, #f87171);
-            color: white;
+            margin-top: 10px;
+            font-style: italic;
         }
 
         .reset-btn {
             background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
             color: white;
             border: none;
-            padding: 15px 35px;
-            border-radius: 10px;
-            font-size: 1.1em;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 25px auto;
+            margin: 20px auto;
             display: block;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -473,51 +207,114 @@
 
         .reset-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(107, 114, 128, 0.3);
+            box-shadow: 0 8px 16px rgba(107, 114, 128, 0.3);
             background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
         }
 
-        .error-message {
-            background: #fef2f2;
-            border: 2px solid #fca5a5;
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #dc2626;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f9fafb;
+            border-radius: 10px;
+            border-left: 5px solid #374151;
+            border-right: 5px solid #dc2626;
+            display: none;
+            text-align: left;
+        }
+
+        .result-title {
+            color: #374151;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid #dc2626;
+            padding-bottom: 10px;
+        }
+
+        .result-text {
+            color: #6b7280;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .part-info {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .part-name {
             color: #dc2626;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-weight: 500;
-            display: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        .success-message {
-            background: #f0fdf4;
-            border: 2px solid #86efac;
-            color: #059669;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-weight: 500;
-            display: none;
+        .part-number {
+            color: #374151;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            background: #f3f4f6;
+            border-radius: 5px;
+            display: inline-block;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 25px;
-                margin: 10px;
-            }
-            
-            h1 {
-                font-size: 2.2em;
-            }
-            
-            .feature-badges {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .camera-btn {
-                width: 100%;
-                margin: 10px 0;
-            }
+        .alt-parts {
+            margin-top: 20px;
+        }
+
+        .alt-parts-title {
+            color: #374151;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .alt-part-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .alt-part-number {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .polling-message {
+            text-align: center;
+            color: #6b7280;
+            font-style: italic;
+            margin: 15px 0;
         }
     </style>
 </head>
@@ -525,60 +322,40 @@
     <div class="container">
         <h1>🔧 Universal Truck Parts Identifier</h1>
         
-        <div class="feature-badges">
-            <span class="badge">🤖 AI-Powered</span>
-            <span class="badge">📱 Mobile Ready</span>
-            <span class="badge">🔍 VIN Support</span>
-            <span class="badge">⚡ Instant Results</span>
-        </div>
-
         <div class="description-section">
-            <div class="section-title">
-                📝 Part Description or Number
-            </div>
+            <div class="description-title">Part Number or Description:</div>
+            <br>
             <textarea id="partDescription" class="description-input" 
                      placeholder="Enter part number, description, or any details to help identify the part (e.g., 'brake caliper F150 2018', 'part #12345-ABC', 'leaking power steering pump', etc.)"></textarea>
-            
-            <div class="section-title" style="margin-top: 20px;">
-                🚛 Vehicle VIN (Optional)
-            </div>
-            <input type="text" id="vinInput" class="vin-input" 
-                   placeholder="Enter 17-character VIN for precise part matching" 
-                   maxlength="17">
         </div>
 
         <div class="upload-area" id="uploadArea">
             <div class="upload-icon">📷</div>
             <div class="upload-text">
-                Upload Part Image (Optional)<br>
-                <small>Click here or drag & drop • JPG, PNG, GIF • Max 5MB</small>
+                Upload Image (Optional)<br>
+                <small>Click here or drag & drop part image • JPG, PNG, GIF</small>
             </div>
             <input type="file" id="fileInput" class="file-input" accept="image/*">
         </div>
-
-        <button id="cameraBtn" class="camera-btn">📱 Take Photo</button>
 
         <div class="preview-container" id="previewContainer">
             <img id="previewImage" class="preview-image" alt="Preview">
             <button id="removeImageBtn" class="remove-image-btn" title="Remove image">×</button>
         </div>
 
-        <div class="error-message" id="errorMessage"></div>
-        <div class="success-message" id="successMessage"></div>
-
         <div class="submit-section">
             <button id="submitBtn" class="submit-btn">🔍 Identify Part</button>
-            <p class="submit-note">💡 Pro Tip: Combine text description with image for best results</p>
+            <p class="submit-note">You can submit with text only, image only, or both for best results</p>
         </div>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <div class="loading-text">🤖 AI analyzing your part...</div>
+            <p>Analyzing your part...</p>
         </div>
 
         <div class="result-container" id="resultContainer">
-            <div class="result-title">Part Identification Results</div>
-            <div id="resultContent"></div>
+            <div class="result-title">Part Identification Results:</div>
+            <div class="result-text" id="resultText"></div>
         </div>
     </div>
 
@@ -586,7 +363,6 @@
         let selectedFile = null;
         let requestId = null;
         let pollingInterval = null;
-        let mediaStream = null;
         
         // Your Railway webhook server URL
         const RAILWAY_API_URL = 'https://truck-webhook-production.up.railway.app';
@@ -598,26 +374,20 @@
         const previewImage = document.getElementById('previewImage');
         const removeImageBtn = document.getElementById('removeImageBtn');
         const submitBtn = document.getElementById('submitBtn');
-        const cameraBtn = document.getElementById('cameraBtn');
         const loading = document.getElementById('loading');
         const resultContainer = document.getElementById('resultContainer');
-        const resultContent = document.getElementById('resultContent');
+        const resultText = document.getElementById('resultText');
         const partDescription = document.getElementById('partDescription');
-        const vinInput = document.getElementById('vinInput');
-        const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
 
-        // Enhanced event listeners
-        uploadArea.addEventListener('click', () => fileInput.click());
+        // Upload area click handler
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // File input change handler
         fileInput.addEventListener('change', handleFileSelect);
-        submitBtn.addEventListener('click', analyzePart);
-        cameraBtn.addEventListener('click', activateCamera);
-        removeImageBtn.addEventListener('click', removeImage);
 
-        // VIN validation
-        vinInput.addEventListener('input', validateVin);
-
-        // Drag and drop handlers with better feedback
+        // Drag and drop handlers
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadArea.classList.add('dragover');
@@ -636,114 +406,11 @@
             }
         });
 
-        function validateVin(e) {
-            const vin = e.target.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, '');
-            e.target.value = vin;
-            
-            if (vin.length === 17) {
-                showSuccess('VIN validated successfully!');
-            } else if (vin.length > 0) {
-                clearMessages();
-            }
-        }
+        // Submit button handler
+        submitBtn.addEventListener('click', analyzePart);
 
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            successMessage.style.display = 'none';
-            setTimeout(clearMessages, 5000);
-        }
-
-        function showSuccess(message) {
-            successMessage.textContent = message;
-            successMessage.style.display = 'block';
-            errorMessage.style.display = 'none';
-            setTimeout(clearMessages, 3000);
-        }
-
-        function clearMessages() {
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-        }
-
-        async function activateCamera() {
-            try {
-                // Check if camera is supported
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    showError('Camera access not supported in this browser');
-                    return;
-                }
-
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment',  // Use back camera on mobile
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
-                
-                mediaStream = stream;
-                
-                // Create video element for camera preview
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                video.autoplay = true;
-                video.style.width = '100%';
-                video.style.maxHeight = '400px';
-                video.style.borderRadius = '15px';
-                
-                // Create capture button
-                const captureBtn = document.createElement('button');
-                captureBtn.textContent = '📸 Capture Photo';
-                captureBtn.className = 'submit-btn';
-                captureBtn.style.margin = '15px 10px';
-                
-                // Create cancel button
-                const cancelBtn = document.createElement('button');
-                cancelBtn.textContent = '❌ Cancel';
-                cancelBtn.className = 'reset-btn';
-                cancelBtn.style.margin = '15px 10px';
-                
-                // Replace upload area with camera preview
-                const originalContent = uploadArea.innerHTML;
-                uploadArea.innerHTML = '';
-                uploadArea.appendChild(video);
-                uploadArea.appendChild(captureBtn);
-                uploadArea.appendChild(cancelBtn);
-                
-                // Capture photo
-                captureBtn.onclick = () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    canvas.getContext('2d').drawImage(video, 0, 0);
-                    
-                    canvas.toBlob((blob) => {
-                        const file = new File([blob], 'camera-capture.jpg', { type: 'image/jpeg' });
-                        handleFile(file);
-                        stopCamera();
-                        uploadArea.innerHTML = originalContent;
-                    }, 'image/jpeg', 0.8);
-                };
-                
-                // Cancel camera
-                cancelBtn.onclick = () => {
-                    stopCamera();
-                    uploadArea.innerHTML = originalContent;
-                };
-                
-            } catch (error) {
-                console.error('Camera error:', error);
-                showError('Unable to access camera: ' + error.message);
-            }
-        }
-
-        function stopCamera() {
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-                mediaStream = null;
-            }
-        }
+        // Remove image button handler
+        removeImageBtn.addEventListener('click', removeImage);
 
         function handleFileSelect(e) {
             const file = e.target.files[0];
@@ -753,21 +420,21 @@
         }
 
         function handleFile(file) {
-            // Enhanced file validation
+            // Validate file type
             if (!file.type.startsWith('image/')) {
-                showError('Please select an image file (JPG, PNG, GIF)');
+                alert('Please select an image file (JPG, PNG, GIF)');
                 return;
             }
 
+            // Validate file size (max 5MB for mobile photos)
             if (file.size > 5 * 1024 * 1024) {
-                showError('Image too large. Please use a smaller image (under 5MB)');
+                alert('Image too large. Please use a smaller image (under 5MB). Most phone photos work great!');
                 return;
             }
 
             selectedFile = file;
-            showSuccess('Image loaded successfully!');
 
-            // Show preview with enhanced UI
+            // Show preview
             const reader = new FileReader();
             reader.onload = (e) => {
                 previewImage.src = e.target.result;
@@ -778,41 +445,47 @@
         }
 
         function removeImage() {
+            // Clear the selected file
             selectedFile = null;
+            
+            // Reset the file input
             fileInput.value = '';
+            
+            // Hide the preview container
             previewContainer.style.display = 'none';
+            
+            // Clear the image source
             previewImage.src = '';
-            clearMessages();
         }
 
-        // Enhanced image compression
-        function resizeImageToBlob(file, maxWidth = 800, maxHeight = 600, quality = 0.7) {
+        function resizeImageToBlob(file, maxWidth = 700, maxHeight = 500, quality = 0.6) {
             return new Promise((resolve) => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const img = new Image();
                 
                 img.onload = () => {
+                    // Calculate new dimensions while maintaining aspect ratio
                     let { width, height } = img;
                     
-                    // Better aspect ratio calculation
-                    const maxDimension = Math.max(width, height);
-                    const targetMax = Math.max(maxWidth, maxHeight);
-                    
-                    if (maxDimension > targetMax) {
-                        const ratio = targetMax / maxDimension;
-                        width *= ratio;
-                        height *= ratio;
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height = (height * maxWidth) / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width = (width * maxHeight) / height;
+                            height = maxHeight;
+                        }
                     }
                     
+                    // Set canvas dimensions
                     canvas.width = width;
                     canvas.height = height;
                     
-                    // Better quality rendering
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
+                    // Draw and compress image, return as blob
                     ctx.drawImage(img, 0, 0, width, height);
-                    
                     canvas.toBlob(resolve, 'image/jpeg', quality);
                 };
                 
@@ -823,5 +496,188 @@
         async function analyzePart() {
             const url = "https://hook.us2.make.com/oayob8jxp3ueac2v47ao54e0adb6v5xi";
             
+            // Get the part description
             const description = partDescription.value.trim();
-            const
+            
+            // Check if we have either image or description
+            if (!selectedFile && !description) {
+                alert('Please provide either an image, part number, or description to identify the part.');
+                return;
+            }
+
+            // Generate unique request ID
+            requestId = 'part_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            // Show loading state
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+            resultContainer.style.display = 'none';
+
+            try {
+                // Prepare the JSON data
+                const formData = {
+                    requestId: requestId,
+                    timestamp: new Date().toISOString(),
+                    partDescription: description,
+                    hasImage: !!selectedFile,
+                    request: description 
+                        ? `Please identify this automotive part. Search query: "${description}". ${selectedFile ? 'Also analyze the provided image. ' : ''}Provide the part name, primary part number, and any alternative/compatible part numbers.`
+                        : "Please identify this automotive part from the image. Provide the part name, primary part number, and any alternative/compatible part numbers."
+                };
+
+                // Add compressed image as base64 if provided
+                if (selectedFile) {
+                    const compressedBase64 = await resizeImageToBase64(selectedFile);
+                    formData.image = compressedBase64; // Full data:image/jpeg;base64,... string
+                    formData.originalFilesize = selectedFile.size;
+                    formData.filename = selectedFile.name;
+                    formData.filetype = selectedFile.type;
+                }
+
+                // Send JSON data
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    showResult("🔍 Analysis in progress...\n\nWe're identifying your part and looking up part numbers. This may take a few moments.");
+                    
+                    // Start polling for response
+                    startPolling();
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ Error sending request: ${error.message}\n\nPlease check your connection and try again.`);
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        function startPolling() {
+            let attempts = 0;
+            const maxAttempts = 36; // 3 minutes of polling (5 second intervals)
+            
+            pollingInterval = setInterval(async () => {
+                attempts++;
+                
+                try {
+                    // Poll Railway server for response
+                    const response = await fetch(`${RAILWAY_API_URL}/get-response/${requestId}`);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.status === 'complete') {
+                            clearInterval(pollingInterval);
+                            displayPartResponse(data);
+                            loading.style.display = 'none';
+                            submitBtn.disabled = false;
+                            return;
+                        } else if (data.status === 'pending') {
+                            // Update polling message
+                            showPollingMessage(`🔍 Analysis in progress... (${attempts * 5}s)`);
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error('Polling error:', error);
+                    // Continue polling even if there's a network error
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(pollingInterval);
+                    showResult("⏰ Analysis timeout. The analysis may still be in progress. Please try again in a moment or contact support if the issue persists.");
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            }, 5000); // Poll every 5 seconds
+        }
+
+        function showPollingMessage(message) {
+            const pollingDiv = document.querySelector('.polling-message') || document.createElement('div');
+            pollingDiv.className = 'polling-message';
+            pollingDiv.textContent = message;
+            
+            if (!document.querySelector('.polling-message')) {
+                resultContainer.appendChild(pollingDiv);
+            }
+        }
+
+        function showResult(text) {
+            resultText.textContent = text;
+            resultContainer.style.display = 'block';
+        }
+
+        function displayPartResponse(data) {
+            // Clear any polling messages
+            const pollingMsg = document.querySelector('.polling-message');
+            if (pollingMsg) pollingMsg.remove();
+            
+            const partInfoHtml = `
+                <div class="part-info">
+                    <div class="part-name">${data.partName}</div>
+                    <div>Primary Part Number: <span class="part-number">${data.partNumber}</span></div>
+                    ${data.description ? `<p style="margin-top: 15px; color: #6b7280;">${data.description}</p>` : ''}
+                    
+                    ${data.alternativePartNumbers && data.alternativePartNumbers.length > 0 ? `
+                        <div class="alt-parts">
+                            <div class="alt-parts-title">Alternative/Compatible Part Numbers:</div>
+                            <div class="alt-part-list">
+                                ${data.alternativePartNumbers.map(partNum => 
+                                    `<span class="alt-part-number">${partNum}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+                <button id="resetBtn" class="reset-btn">🔄 Search Another Part</button>
+            `;
+            
+            resultContainer.innerHTML = `
+                <div class="result-title">✅ Part Identified Successfully</div>
+                ${partInfoHtml}
+            `;
+            resultContainer.style.display = 'block';
+            
+            // Add reset button functionality
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+        }
+
+        function resetForm() {
+            // Clear all form inputs
+            partDescription.value = '';
+            selectedFile = null;
+            
+            // Hide preview and results
+            previewContainer.style.display = 'none';
+            resultContainer.style.display = 'none';
+            loading.style.display = 'none';
+            
+            // Reset file input
+            fileInput.value = '';
+            
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            
+            // Clear any ongoing polling
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
+            
+            // Reset request ID
+            requestId = null;
+            
+            // Scroll back to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
