@@ -617,6 +617,7 @@
             resultContainer.style.display = 'block';
         }
 
+        // FIXED FUNCTION - This is the corrected version
         function displayPartResponse(data) {
             // Clear any polling messages
             const pollingMsg = document.querySelector('.polling-message');
@@ -626,18 +627,19 @@
                 <div class="part-info">
                     <div class="part-name">${data.partName}</div>
                     <div>Primary Part Number: <span class="part-number">${data.partNumber}</span></div>
-                    ${data.description ? `<p style="margin-top: 15px; color: #6b7280;">${data.description}</p>` : ''}
+                    ${data.description ? `<p style="margin-top: 15px; color: #6b7280;">${data.description}</p>` : 
+                      '<p style="margin-top: 15px; color: #6b7280;">No description available</p>'}
                     
                     ${data.alternativePartNumbers && data.alternativePartNumbers.length > 0 ? `
                         <div class="alt-parts">
                             <div class="alt-parts-title">Alternative/Compatible Part Numbers:</div>
                             <div class="alt-part-list">
-                                ${data.alternativePartNumbers.map(partNum => 
-                                    `<span class="alt-part-number">${partNum}</span>`
+                                ${data.alternativePartNumbers.map(part => 
+                                    `<span class="alt-part-number">${part.partNumber} - ${part.brand}</span>`
                                 ).join('')}
                             </div>
                         </div>
-                    ` : ''}
+                    ` : '<p style="margin-top: 15px; color: #6b7280; font-style: italic;">No alternative part numbers available</p>'}
                 </div>
                 <button id="resetBtn" class="reset-btn">🔄 Search Another Part</button>
             `;
