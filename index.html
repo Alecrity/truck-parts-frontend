@@ -284,6 +284,33 @@
             display: inline-block;
         }
 
+        .clickable-part {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            padding: 2px 4px;
+        }
+
+        .clickable-part:hover {
+            background: #dbeafe;
+            color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .main-part-container {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+
+        .main-part-container:hover {
+            background: #dbeafe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+
         .alt-parts {
             margin-top: 20px;
         }
@@ -308,6 +335,17 @@
             border-radius: 20px;
             font-size: 0.9em;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .alt-part-number:hover {
+            background: #dbeafe;
+            color: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
 
         .polling-message {
@@ -363,6 +401,7 @@
         let selectedFile = null;
         let requestId = null;
         let pollingInterval = null;
+        let currentPartData = null;
         
         // Your Railway webhook server URL
         const RAILWAY_API_URL = 'https://truck-webhook-production.up.railway.app';
@@ -617,29 +656,41 @@
             resultContainer.style.display = 'block';
         }
 
-        // FIXED FUNCTION - This is the corrected version
         function displayPartResponse(data) {
+            // Store data for search functions
+            currentPartData = data;
+            
             // Clear any polling messages
             const pollingMsg = document.querySelector('.polling-message');
             if (pollingMsg) pollingMsg.remove();
             
+            let altPartsHtml = '';
+            if (data.alternativePartNumbers && data.alternativePartNumbers.length > 0) {
+                const altPartItems = data.alternativePartNumbers.map((part, index) => {
+                    return `<span class="alt-part-number" data-part-index="${index}">${part.partNumber} - ${part.brand}</span>`;
+                }).join('');
+                
+                altPartsHtml = `
+                    <div class="alt-parts">
+                        <div class="alt-parts-title">Alternative/Compatible Part Numbers:</div>
+                        <div class="alt-part-list">${altPartItems}</div>
+                        <small style="color: #6b7280; font-style: italic; margin-top: 10px; display: block;">💡 Click any part number to search Google</small>
+                    </div>
+                `;
+            } else {
+                altPartsHtml = '<p style="margin-top: 15px; color: #6b7280; font-style: italic;">No alternative part numbers available</p>';
+            }
+            
             const partInfoHtml = `
                 <div class="part-info">
-                    <div class="part-name">${data.partName}</div>
-                    <div>Primary Part Number: <span class="part-number">${data.partNumber}</span></div>
+                    <div class="main-part-container" id="mainPartContainer">
+                        <div class="part-name">${data.partName}</div>
+                        <div>Primary Part Number: <span class="part-number">${data.partNumber}</span></div>
+                        <small style="color: #6b7280; font-style: italic;">💡 Click to search Google</small>
+                    </div>
                     ${data.description ? `<p style="margin-top: 15px; color: #6b7280;">${data.description}</p>` : 
                       '<p style="margin-top: 15px; color: #6b7280;">No description available</p>'}
-                    
-                    ${data.alternativePartNumbers && data.alternativePartNumbers.length > 0 ? `
-                        <div class="alt-parts">
-                            <div class="alt-parts-title">Alternative/Compatible Part Numbers:</div>
-                            <div class="alt-part-list">
-                                ${data.alternativePartNumbers.map(part => 
-                                    `<span class="alt-part-number">${part.partNumber} - ${part.brand}</span>`
-                                ).join('')}
-                            </div>
-                        </div>
-                    ` : '<p style="margin-top: 15px; color: #6b7280; font-style: italic;">No alternative part numbers available</p>'}
+                    ${altPartsHtml}
                 </div>
                 <button id="resetBtn" class="reset-btn">🔄 Search Another Part</button>
             `;
@@ -650,14 +701,47 @@
             `;
             resultContainer.style.display = 'block';
             
-            // Add reset button functionality
-            document.getElementById('resetBtn').addEventListener('click', resetForm);
+            // Add click handlers after DOM is updated
+            setTimeout(() => {
+                // Main part click handler
+                const mainContainer = document.getElementById('mainPartContainer');
+                if (mainContainer) {
+                    mainContainer.addEventListener('click', () => {
+                        if (currentPartData) {
+                            const searchQuery = currentPartData.partName + ' ' + currentPartData.partNumber;
+                            const encodedQuery = encodeURIComponent(searchQuery.trim());
+                            window.open('https://www.google.com/search?q=' + encodedQuery, '_blank');
+                        }
+                    });
+                }
+                
+                // Alternative parts click handlers
+                const altParts = document.querySelectorAll('.alt-part-number');
+                altParts.forEach(element => {
+                    element.addEventListener('click', () => {
+                        const index = parseInt(element.getAttribute('data-part-index'));
+                        if (currentPartData && currentPartData.alternativePartNumbers && currentPartData.alternativePartNumbers[index]) {
+                            const part = currentPartData.alternativePartNumbers[index];
+                            const searchQuery = part.partNumber + ' ' + part.brand;
+                            const encodedQuery = encodeURIComponent(searchQuery.trim());
+                            window.open('https://www.google.com/search?q=' + encodedQuery, '_blank');
+                        }
+                    });
+                });
+                
+                // Reset button handler
+                const resetBtn = document.getElementById('resetBtn');
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', resetForm);
+                }
+            }, 100);
         }
 
         function resetForm() {
             // Clear all form inputs
             partDescription.value = '';
             selectedFile = null;
+            currentPartData = null;
             
             // Hide preview and results
             previewContainer.style.display = 'none';
